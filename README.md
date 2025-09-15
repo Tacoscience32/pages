@@ -11,4 +11,5 @@
 [**Dice** _Mobile_](https://tacoscience32.github.io/pages/dice/mob)  
 [**Music**](https://tacoscience32.github.io/pages/music)  
 [**CLOCK**](https://tacoscience32.github.io/pages/clock)  
+[**Domino Counter**](https://tacoscience32.github.io/pages/domino_counter)  
 [**BPM** _bad_](https://tacoscience32.github.io/pages/bpm-counter)  
