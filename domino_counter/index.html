@@ -36,19 +36,20 @@
     }
 
     .controls {
-      margin: 12px 0;
+      /* margin: 12px 0; */
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       align-items: center;
+      justify-content: center;
       gap: 12px
     }
 
     .total-box {
       background: linear-gradient(135deg, #e90e0e, #c70202);
       color: #fff;
-      font-size: 32px;
+      font-size: 64px;
       font-weight: 900;
-      padding: 18px 32px;
+      padding: 5px 20px;
       border-radius: 20px;
       box-shadow: 0 6px 20px rgba(233, 14, 14, 0.7);
       letter-spacing: 1px;
@@ -134,9 +135,8 @@
 </head>
 <body>
   <div class="app">
-    <h1>Domino Counter</h1>
     <div class="controls">
-      <div class="total-box">Total: <span id="mainCount">0</span></div>
+      <div class="total-box"><span id="mainCount">0</span></div>
       <button id="resetBtn">Reset</button>
     </div>
     <div class="stats" id="buttons">
