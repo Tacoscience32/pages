@@ -137,7 +137,10 @@
   <div class="app">
     <div class="controls">
       <div class="total-box"><span id="mainCount">0</span></div>
-      <button id="resetBtn">Reset</button>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <button id="resetBtn">Reset</button>
+        <button id="copyBtn" style="background:#22c55e;color:#012010;">Copy</button>
+      </div>
     </div>
     <div class="stats" id="buttons">
       <!-- Tiles 1-12 -->
@@ -200,6 +203,14 @@
       });
       totalCount = 0;
       document.getElementById('mainCount').textContent = 0;
+    });
+
+    document.getElementById('copyBtn').addEventListener('click', () => {
+      const btn = document.getElementById('copyBtn');
+      navigator.clipboard.writeText(String(totalCount)).then(() => {
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = 'Copy'; }, 1500);
+      });
     });
   </script>
 </body>
