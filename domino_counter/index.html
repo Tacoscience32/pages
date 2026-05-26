@@ -59,24 +59,35 @@
       margin-bottom: 12px;
     }
 
+    /* Spans across and centers elements strictly within the remaining space */
     .controls-center {
       display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: center; 
+      justify-content: center;
       gap: 8px;
       flex: 1;
     }
 
+    /* Side-by-side layout for score and buttons */
+    .total-row {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 14px;
+    }
+
+    /* Increased font-size and fine-tuned padding for maximum legibility */
     .total-box {
-      background: linear-gradient(135deg, #06b6d4, #0891b2);
-      color: #fff;
-      font-size: 54px;
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: #012010;
+      font-size: 68px;
       font-weight: 900;
-      padding: 2px 20px;
-      border-radius: 20px;
-      box-shadow: 0 6px 20px rgba(6, 182, 212, 0.7);
+      padding: 6px 28px;
+      border-radius: 22px;
+      box-shadow: 0 6px 20px rgba(34, 197, 94, 0.5);
       letter-spacing: 1px;
-      border: 3px solid #0e7490;
+      border: 3px solid #15803d;
       line-height: 1;
     }
 
@@ -236,14 +247,18 @@
 <body>
   <div class="app">
     <div class="controls">
+      
       <div class="controls-center">
-        <div class="total-box"><span id="mainCount">0</span></div>
-        <div class="ctrl-btns" style="flex-direction:row;">
-          <button id="resetBtn">Reset</button>
-          <button id="copyBtn">Copy</button>
+        <div class="total-row">
+          <div class="total-box"><span id="mainCount">0</span></div>
+          <div class="ctrl-btns">
+            <button id="resetBtn">Reset</button>
+            <button id="copyBtn">Copy</button>
+          </div>
         </div>
       </div>
-      <div class="score-form" style="align-items:flex-end;">
+      
+      <div class="score-form" style="width:156px; flex-shrink:0; align-items:flex-end;">
         <div class="form-row" style="justify-content:flex-end;">
           <label for="nameInput">Name</label>
           <input type="text" id="nameInput" name="name" style="width:100px;" required>
