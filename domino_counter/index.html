@@ -36,24 +36,37 @@
     }
 
     .controls {
-      /* margin: 12px 0; */
       display: flex;
       flex-direction: row;
       align-items: center;
-      justify-content: center;
+      justify-content: space-between;
       gap: 12px
     }
 
+    .controls-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      flex: 1
+    }
+
     .total-box {
-      background: linear-gradient(135deg, #e90e0e, #c70202);
+      background: linear-gradient(135deg, #06b6d4, #0891b2);
       color: #fff;
       font-size: 64px;
       font-weight: 900;
       padding: 5px 20px;
       border-radius: 20px;
-      box-shadow: 0 6px 20px rgba(233, 14, 14, 0.7);
+      box-shadow: 0 6px 20px rgba(6, 182, 212, 0.7);
       letter-spacing: 1px;
-      border: 3px solid #a20000
+      border: 3px solid #0e7490
+    }
+
+    .ctrl-btns {
+      display: flex;
+      flex-direction: column;
+      gap: 8px
     }
 
     button {
@@ -66,10 +79,23 @@
       font-weight: 600
     }
 
+    #resetBtn {
+      background: #e11d48;
+      color: #fff
+    }
+
+    #copyBtn {
+      background: #a855f7;
+      color: #1a0533
+    }
+
+    #copyBtn.copied {
+      background: #9333ea
+    }
+
     .stats {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      grid-template-rows: repeat(5, auto);
       gap: 12px;
       margin-top: 16px
     }
@@ -103,7 +129,6 @@
       width: 80%;
       aspect-ratio: 1/1;
       background: #00000000;
-      ;
       border-radius: 6px;
       display: flex;
       align-items: center;
@@ -117,10 +142,6 @@
       object-fit: contain
     }
 
-    .tile-image.large {
-      width: 90%
-    }
-
     .remove-btn {
       background: #e11d48;
       color: #fff;
@@ -131,19 +152,81 @@
       cursor: pointer
     }
 
+    .score-form {
+      margin-top: 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      padding-top: 20px;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 10px
+    }
+
+
+    .form-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap
+    }
+
+    .form-row label {
+      font-size: 14px;
+      color: #a0b4c8;
+      min-width: 46px
+    }
+
+    .form-row input {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      color: #e6eef6;
+      padding: 6px 10px;
+      font-size: 14px;
+      font-family: inherit
+    }
+
+    .form-row input:focus {
+      outline: none;
+      border-color: #06b6d4
+    }
+
+    #submitBtn {
+      background: #22c55e;
+      color: #012010;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 14px;
+      width: 100%
+    }
   </style>
 </head>
 <body>
   <div class="app">
     <div class="controls">
-      <div class="total-box"><span id="mainCount">0</span></div>
-      <div style="display:flex;flex-direction:column;gap:8px;">
-        <button id="resetBtn">Reset</button>
-        <button id="copyBtn" style="background:#22c55e;color:#012010;">Copy</button>
+      <div class="controls-center">
+        <div class="total-box"><span id="mainCount">0</span></div>
+        <div class="ctrl-btns" style="flex-direction:row;">
+          <button id="resetBtn">Reset</button>
+          <button id="copyBtn">Copy</button>
+        </div>
+      </div>
+      <div class="score-form" style="margin-top:0;border-top:none;padding-top:0;align-items:flex-end;">
+        <div class="form-row" style="justify-content:flex-end;">
+          <label for="nameInput">Name</label>
+          <input type="text" id="nameInput" name="name" style="width:100px;" required>
+        </div>
+        <div class="form-row" style="justify-content:flex-end;">
+          <label for="roundInput">Round</label>
+          <input type="number" id="roundInput" name="round" min="0" max="12" value="12" style="width:55px;" required>
+        </div>
+        <button id="submitBtn">Update</button>
       </div>
     </div>
     <div class="stats" id="buttons">
-      <!-- Tiles 1-12 -->
       <div class="tile-button"><div class="tile-image"><img src="domino_01.png"></div><div class="counter-row"><div class="count" id="count-1">0</div><button class="remove-btn">-</button></div></div>
       <div class="tile-button"><div class="tile-image"><img src="domino_02.png"></div><div class="counter-row"><div class="count" id="count-2">0</div><button class="remove-btn">-</button></div></div>
       <div class="tile-button"><div class="tile-image"><img src="domino_03.png"></div><div class="counter-row"><div class="count" id="count-3">0</div><button class="remove-btn">-</button></div></div>
@@ -155,9 +238,7 @@
       <div class="tile-button"><div class="tile-image"><img src="domino_09.png"></div><div class="counter-row"><div class="count" id="count-9">0</div><button class="remove-btn">-</button></div></div>
       <div class="tile-button"><div class="tile-image"><img src="domino_10.png"></div><div class="counter-row"><div class="count" id="count-10">0</div><button class="remove-btn">-</button></div></div>
       <div class="tile-button"><div class="tile-image"><img src="domino_11.png"></div><div class="counter-row"><div class="count" id="count-11">0</div><button class="remove-btn">-</button></div></div>
-      <!-- Tile 12 -->
       <div class="tile-button"><div class="tile-image"><img src="domino_12.png"></div><div class="counter-row"><div class="count" id="count-12">0</div><button class="remove-btn">-</button></div></div>
-      <!-- Tile 0 at bottom center -->
       <div class="tile-button" style="grid-column:2;">
         <div class="tile-image"><img src="domino_00.png"></div>
         <div class="counter-row">
@@ -166,7 +247,9 @@
         </div>
       </div>
     </div>
+
   </div>
+
   <script>
     const counts = {};
     let totalCount = 0;
@@ -178,7 +261,7 @@
       counts[tileNum] = 0;
 
       btn.addEventListener('click', e => {
-        if(e.target === removeBtn) return;
+        if (e.target === removeBtn) return;
         counts[tileNum]++;
         totalCount += tileNum === 0 ? 50 : tileNum;
         countEl.textContent = counts[tileNum];
@@ -187,7 +270,7 @@
 
       removeBtn.addEventListener('click', e => {
         e.stopPropagation();
-        if(counts[tileNum] > 0){
+        if (counts[tileNum] > 0) {
           counts[tileNum]--;
           totalCount -= tileNum === 0 ? 50 : tileNum;
           countEl.textContent = counts[tileNum];
@@ -199,7 +282,7 @@
     document.getElementById('resetBtn').addEventListener('click', () => {
       Object.keys(counts).forEach(k => {
         counts[k] = 0;
-        document.getElementById(`count-${k}`).textContent = 0;
+        document.getElementById('count-' + k).textContent = 0;
       });
       totalCount = 0;
       document.getElementById('mainCount').textContent = 0;
@@ -208,10 +291,35 @@
     document.getElementById('copyBtn').addEventListener('click', () => {
       const btn = document.getElementById('copyBtn');
       navigator.clipboard.writeText(String(totalCount)).then(() => {
+        btn.classList.add('copied');
         btn.textContent = 'Copied!';
-        setTimeout(() => { btn.textContent = 'Copy'; }, 1500);
+        setTimeout(() => {
+          btn.classList.remove('copied');
+          btn.textContent = 'Copy';
+        }, 1500);
       });
     });
+
+    document.getElementById('submitBtn').addEventListener('click', () => {
+      const name = document.getElementById('nameInput').value.trim();
+      const roundInput = document.getElementById('roundInput');
+      const round = roundInput.value;
+      const amount = totalCount;
+
+      if (!name || round === '') return;
+
+      const cur = parseInt(roundInput.value);
+      if (cur > 0) roundInput.value = cur - 1;
+
+      const body = new URLSearchParams({ name, round, amount });
+
+      fetch('http://domino.mrtaco.cc/increment', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: body.toString()
+      }).catch(err => console.error('Submit failed:', err));
+    });
+
   </script>
 </body>
 </html>
