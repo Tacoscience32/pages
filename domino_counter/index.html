@@ -1,3 +1,5 @@
+  <!-- scale to screen -->
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -6,41 +8,55 @@
   <title>Domino Counter</title>
   <link rel="icon" type="image/png" href="domino_05.png">
   <style>
+    /* Force body to take exactly 100% of the screen with no scrolling allowed */
     body {
       font-family: Inter, system-ui, Segoe UI, Roboto, Arial;
       margin: 0;
+      padding: 0;
       background: #000000;
       color: #e6eef6;
-      min-height: 100vh;
+      width: 100vw;
+      height: 100dvh;
+      overflow: hidden;
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       justify-content: center;
-      padding: 0
+      box-sizing: border-box;
     }
 
+    /* Universal box-sizing rule for predictable scaling */
+    *, *:before, *:after {
+      box-sizing: border-box;
+    }
+
+    /* App container dynamically scales to fill max width and height cleanly */
     .app {
       width: 100%;
-      max-width: 750px;
+      height: 100%;
+      max-width: 100vw;
+      max-height: 100dvh;
       background: rgba(35, 35, 35, 0.9);
-      border-radius: 12px;
-      padding: 18px;
+      padding: 16px;
       box-shadow: 0 10px 30px rgba(2, 6, 12, 0.6);
       text-align: center;
-      margin-top: 12px
+      display: flex;
+      flex-direction: column;
     }
 
     h1 {
-      margin: 0;
+      margin: 0 0 12px 0;
       font-size: 22px;
-      margin-bottom: 12px
     }
 
+    /* Static sizing for header controls */
     .controls {
       display: flex;
       flex-direction: row;
       align-items: center;
       justify-content: space-between;
-      gap: 12px
+      gap: 12px;
+      flex-shrink: 0; 
+      margin-bottom: 12px;
     }
 
     .controls-center {
@@ -48,25 +64,26 @@
       flex-direction: column;
       align-items: center;
       gap: 8px;
-      flex: 1
+      flex: 1;
     }
 
     .total-box {
       background: linear-gradient(135deg, #06b6d4, #0891b2);
       color: #fff;
-      font-size: 64px;
+      font-size: 54px;
       font-weight: 900;
-      padding: 5px 20px;
+      padding: 2px 20px;
       border-radius: 20px;
       box-shadow: 0 6px 20px rgba(6, 182, 212, 0.7);
       letter-spacing: 1px;
-      border: 3px solid #0e7490
+      border: 3px solid #0e7490;
+      line-height: 1;
     }
 
     .ctrl-btns {
       display: flex;
       flex-direction: column;
-      gap: 8px
+      gap: 8px;
     }
 
     button {
@@ -76,70 +93,83 @@
       border-radius: 8px;
       color: #022428;
       cursor: pointer;
-      font-weight: 600
+      font-weight: 600;
     }
 
     #resetBtn {
       background: #e11d48;
-      color: #fff
+      color: #fff;
     }
 
     #copyBtn {
       background: #a855f7;
-      color: #1a0533
+      color: #1a0533;
     }
 
     #copyBtn.copied {
-      background: #9333ea
+      background: #9333ea;
     }
 
+    /* CRITICAL: The grid container absorbs all remaining viewport space 
+      and scales its children proportionally.
+    */
     .stats {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-top: 16px
+      gap: 8px;
+      flex: 1;
+      min-height: 0; 
     }
 
+    /* Flex-based tiles that grow and shrink according to window size */
     .tile-button {
       background: #fff;
       color: #000;
-      border-radius: 20px;
-      padding: 12px;
+      border-radius: 12px;
+      padding: 6px;
       cursor: pointer;
       box-shadow: 0 4px 10px rgba(2, 6, 12, 0.3);
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 8px;
-      position: relative
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      min-height: 0; 
     }
 
     .counter-row {
       display: flex;
       align-items: center;
-      gap: 6px
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      flex-shrink: 0;
     }
 
     .count {
       font-weight: 700;
-      font-size: 18px
+      font-size: 16px;
     }
 
+    /* Flex image scaling blocks images from clipping outer limits */
     .tile-image {
-      width: 80%;
-      aspect-ratio: 1/1;
+      flex: 1;
+      width: 100%;
       background: #00000000;
       border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow: hidden
+      overflow: hidden;
+      min-height: 0;
+      margin-bottom: 4px;
     }
 
     .tile-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
     }
 
     .remove-btn {
@@ -147,33 +177,32 @@
       color: #fff;
       border: none;
       border-radius: 6px;
-      padding: 6px 10px;
-      font-size: 14px;
-      cursor: pointer
+      padding: 2px 8px;
+      font-size: 12px;
+      cursor: pointer;
     }
 
     .score-form {
-      margin-top: 24px;
-      border-top: 1px solid rgba(255, 255, 255, 0.15);
-      padding-top: 20px;
+      margin-top: 0;
+      border-top: none;
+      padding-top: 0;
       text-align: left;
       display: flex;
       flex-direction: column;
-      gap: 10px
+      gap: 8px;
     }
-
 
     .form-row {
       display: flex;
       align-items: center;
       gap: 10px;
-      flex-wrap: wrap
+      flex-wrap: nowrap;
     }
 
     .form-row label {
       font-size: 14px;
       color: #a0b4c8;
-      min-width: 46px
+      min-width: 46px;
     }
 
     .form-row input {
@@ -181,26 +210,26 @@
       border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 8px;
       color: #e6eef6;
-      padding: 6px 10px;
+      padding: 4px 8px;
       font-size: 14px;
-      font-family: inherit
+      font-family: inherit;
     }
 
     .form-row input:focus {
       outline: none;
-      border-color: #06b6d4
+      border-color: #06b6d4;
     }
 
     #submitBtn {
       background: #22c55e;
       color: #012010;
       border: none;
-      padding: 8px 20px;
+      padding: 6px 20px;
       border-radius: 8px;
       font-weight: 600;
       cursor: pointer;
       font-size: 14px;
-      width: 100%
+      width: 100%;
     }
   </style>
 </head>
@@ -214,7 +243,7 @@
           <button id="copyBtn">Copy</button>
         </div>
       </div>
-      <div class="score-form" style="margin-top:0;border-top:none;padding-top:0;align-items:flex-end;">
+      <div class="score-form" style="align-items:flex-end;">
         <div class="form-row" style="justify-content:flex-end;">
           <label for="nameInput">Name</label>
           <input type="text" id="nameInput" name="name" style="width:100px;" required>
@@ -226,6 +255,7 @@
         <button id="submitBtn">Update</button>
       </div>
     </div>
+    
     <div class="stats" id="buttons">
       <div class="tile-button"><div class="tile-image"><img src="domino_01.png"></div><div class="counter-row"><div class="count" id="count-1">0</div><button class="remove-btn">-</button></div></div>
       <div class="tile-button"><div class="tile-image"><img src="domino_02.png"></div><div class="counter-row"><div class="count" id="count-2">0</div><button class="remove-btn">-</button></div></div>
@@ -247,9 +277,7 @@
         </div>
       </div>
     </div>
-
   </div>
-  <a href="https://pages.mrtaco.cc/domino_counter/scale_test.html">Scaled Version?</a>
 
   <script>
     const counts = {};
@@ -320,7 +348,6 @@
         body: body.toString()
       }).catch(err => console.error('Submit failed:', err));
     });
-
   </script>
 </body>
 </html>
